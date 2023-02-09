@@ -14,15 +14,19 @@ def sleep_a_little(seconds):
 
 def main_threading():
    calc_start_time = time.time()
+
    for i in range(5):
-    calculate_sum_squares((i + 1) * 1000000)
+    maximum_value = (i + 1) * 1000000
+    t = threading.Thread(target=calculate_sum_squares, args=(maximum_value, ))
+    t.start()
 
     print(f"Calculating sum of squares took: { round(time.time() - calc_start_time, 1) }")
     
     sleep_start_time = time.time()
 
-    for i in range(1, 6):
-        sleep_a_little(i)
+    for seconds in range(1, 6):
+        t = threading.Thread(target=sleep_a_little, args=(seconds, ))
+        t.start()
 
     print(f"Sleep took: { round(time.time() - sleep_start_time, 1) }")
 
